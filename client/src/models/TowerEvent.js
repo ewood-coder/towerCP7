@@ -1,3 +1,4 @@
+import { Account } from "./Account.js"
 
 
 export class TowerEvent {
@@ -9,10 +10,14 @@ export class TowerEvent {
 		this.coverImg = data.coverImg
 		this.location = data.location
 		this.capacity = data.capacity
-		
+
 		this.startDate = new Date(data.startDate)
 		this.isCanceled = data.isCanceled
 		this.type = data.type
+
+		// NOTE added a virtual
+		this.creator = data.creator ? new Account(data.creator) : null
+		this.ticketCount = data.ticketCount
 
 	}
 }

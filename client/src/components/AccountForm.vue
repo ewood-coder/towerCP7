@@ -8,7 +8,6 @@ import { AppState } from '../AppState.js';
 const accountData = ref({
 	name: '',
 	picture: '',
-	coverImg: '',
 })
 
 onMounted(() => {
@@ -30,23 +29,48 @@ async function saveAccount() {
 
 
 <template>
-	<hr class="mb-3" />
-	<form @submit.prevent="saveAccount()" class="row">
-		<div class="mb-3 col-12 col-md-6 mb-4">
-			<label for="account-name">Name</label>
-			<input v-model="accountData.name" class="form-control" type="text" id="account-name" minlength="3" required
-				maxlength="25" />
-		</div>
-		<div class="mb-3 col-12 col-md-6 mb-5">
-			<label for="account-picture">Picture</label>
-			<input v-model="accountData.picture" class="form-control" type="url" id="account-picture" maxlength="500">
+	<section>
+		<form @submit.prevent="saveAccount()" class="row">
+			<div class="mb-3 col-12 col-md-6 mb-4">
+				<label for="account-name">Name</label>
+				<input v-model="accountData.name" class="form-control" type="text" id="account-name" minlength="3" required
+					maxlength="25" />
+			</div>
+			<div class="mb-3 col-12 col-md-6 mb-5">
+				<label for="account-picture">Picture</label>
+				<input v-model="accountData.picture" class="form-control" type="url" id="account-picture" maxlength="500">
+			</div>
+
+			<div class="mb-3 col-12 d-flex justify-content-center">
+				<button class="btn btn-success text-light">Save <i class="mdi mdi-floppy"></i></button>
+			</div>
+		</form>
+	</section>
+
+	<hr class="my-5" />
+
+	<section>
+		<!-- SECTION: YOUR EVENTS -->
+		<div class="mb-5">
+			<h1 class="text-start">
+				<u>Your Events:</u>
+			</h1>
+
+
 		</div>
 
-		<div class="mb-3 col-12 d-flex justify-content-center">
-			<button class="btn btn-success text-light">Save <i class="mdi mdi-floppy"></i></button>
+		<!-- -------------------------------------------------- -->
+
+		<!-- SECTION: ATTENDING EVENTS -->
+		<div>
+			<h1 class="text-start">
+				<u>Upcoming Events You're Attending:</u>
+			</h1>
+
+
 		</div>
 
-	</form>
+	</section>
 </template>
 
 

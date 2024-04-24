@@ -2,14 +2,14 @@ import { Account } from "./Account.js"
 import { TowerEvent } from "./TowerEvent.js"
 
 
-export class Ticket {
+export class TowerComment {
 	constructor(data) {
 		this.id = data.id
-		this.accountId = data.accountId
+		this.creatorId = data.creatorId
 		this.eventId = data.eventId
+		this.body = data.body
 
 		// NOTE added a virtual
-		this.profile = data.profile ? new Account(data.profile) : null
-		this.event = data.event ? new TowerEvent(data.event) : null
+		this.creator = new Account(data.creator)
 	}
 }

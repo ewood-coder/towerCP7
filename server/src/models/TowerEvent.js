@@ -22,9 +22,12 @@ TowerEventSchema.virtual('creator', {
 	justOne: true
 })
 
-// TowerEventSchema.virtual('ticketCount', {
-// 	localField: 'creatorId',
-// 	ref: 'Account',
-// 	foreignField: '_id',
-// 	justOne: true
-// })
+// NOTE this works a lot like other virtuals but now it's fields are flipped, since it's looking for data matches in a child collection, instead of the reverse, like the creator virtual
+TowerEventSchema.virtual('ticketCount', {
+	localField: '_id',
+	ref: 'Ticket',
+	foreignField: '_id',
+	justOne: false,
+	count: true
+})
+

@@ -32,16 +32,16 @@ async function logout() {
 				<div class="dropdown-menu dropdown-menu-sm-end dropdown-menu-start p-0 zIndex"
 					aria-labelledby="authDropdown">
 					<div class="list-group">
-						<router-link :to="{ name: 'Account' }">
+						<router-link v-if="account" :to="{ name: 'Account' }">
 							<div class="list-group-item dropdown-item list-group-item-action">
-								Manage Account
+								Your Account
 							</div>
 						</router-link>
-						<RouterLink v-if="account" :to="{ name: 'Profile', params: { profileId: account.id } }">
+						<!-- <RouterLink v-if="account" :to="{ name: 'Profile', params: { profileId: account.id } }">
 							<div class="list-group-item dropdown-item list-group-item-action">
 								Your Profile
 							</div>
-						</RouterLink>
+						</RouterLink> -->
 						<div class="list-group-item dropdown-item list-group-item-action text-danger selectable"
 							@click="logout">
 							<i class="mdi mdi-logout"></i>

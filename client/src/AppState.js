@@ -1,5 +1,7 @@
 import { reactive } from 'vue'
-// import { Profile } from './models/Profile.js'
+import { TowerEvent } from './models/TowerEvent.js'
+import { TowerComment } from './models/TowerComment.js'
+import { Ticket } from './models/Ticket.js'
 
 
 // NOTE AppState is a reactive object to contain app level data
@@ -10,9 +12,20 @@ export const AppState = reactive({
   /** @type {import('./models/Account.js').Account} user info from the database*/
   account: null,
 
-	/** @type {Profile[]} */
-	profiles: null,
+  
+  /** @type {TowerEvent[]} */
+  events: [],
 
-	/** @type {Profile} */
-	activeProfile: null,
+  /** @type {TowerEvent} */
+  activeEvent: null,
+
+
+  /** @type {TowerComment[]} */
+  activeEventComments: [],
+
+  /** @type {Ticket[]} */
+  activeEventTickets: [],
+
+  /** @type {Ticket[]} */
+  accountTickets: []
 })
