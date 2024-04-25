@@ -17,21 +17,19 @@ class EventsService {
 		return events
 	}
 
-	async getOneById(albumId) {
-		const album = await dbContext.Albums.findById(albumId).populate('creator memberCount')
-		if (!album) throw new Error(`No album with the id: ${albumId}`)
-		return album
+	async getOneById(eventId) {
+		const event = await dbContext.TowerEvents.findById(eventId).populate('creator ticketCount')
+		if (!event) throw new Error(`No event with the id: ${eventId}`)
+		return event
 	}
 
 	async cancelEvent(eventId, userId) {
-		const albumToArchive = await this.getOneById(albumId)
-		if (albumToArchive.creatorId != userId) throw new Forbidden(`You cannot archive what is not yours`)
+		const eventToCancel = await this.getOneById(eventId)
+		if (eventToCancel.creatorId != userId) throw new Forbidden(`You cannot archive what is not yours`)
 
-		// await albumToArchive.deleteOne() // if you wanted to delete it
-		// albumToArchive.archived = true // make the change
-		albumToArchive.archived = !albumToArchive.archived // flips the bool
-		await albumToArchive.save() // save the changes
-		return `${albumToArchive.title} has been archived`
+		await eventToCancel.deleteOne() // if you wanted to delete it
+		await eventToCancel.save() // save the changes
+		return `${eventToCancel.name} has been archived`
 	}
 
 }
