@@ -8,24 +8,24 @@ import { api } from "./AxiosService.js"
 
 
 class EventsService {
-  async createAlbum(albumData) {
-    const response = await api.post('api/albums', albumData)
-    console.log('✨📔', response.data);
-    const album = new Album(response.data)
-    AppState.albums.push(album)
-    return album
+  async createEvent(eventData) {
+    const response = await api.post('api/events', eventData)
+    console.log('✨🎸', response.data);
+    const event = new TowerEvent(response.data)
+    AppState.events.push(event)
+    return event
   }
-  async getAlbumById(albumId) {
-    const response = await api.get(`api/albums/${albumId}`)
+  async getEventById(eventId) {
+    const response = await api.get(`api/events/${eventId}`)
     console.log('📷🦧', response.data)
-    const album = new Album(response.data) // DO NOT FORGET TO CLASS YOUR DATA 🙎‍♂️
-    AppState.activeAlbum = album
+    const event = new TowerEvent(response.data) // DO NOT FORGET TO CLASS YOUR DATA 🙎‍♂️
+    AppState.activeEvent = event
   }
-  async getAlbums() {
-    const response = await api.get('api/albums')
-    console.log('📷📔', response.data)
-    const albums = response.data.map(albumData => new Album(albumData))
-    AppState.albums = albums
+  async getEvents() {
+    const response = await api.get('api/events')
+    console.log('📷🎸', response.data)
+    const events = response.data.map(eventData => new TowerEvent(eventData))
+    AppState.events = events
   }
 
 }

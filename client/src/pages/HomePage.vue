@@ -5,7 +5,7 @@ import { AppState } from '../AppState.js';
 import ModalWrapper from '../components/ModalWrapper.vue';
 import EventCard from '../components/EventCard.vue';
 import EventForm from '../components/EventForm.vue';
-// import { albumsService } from '../services/AlbumsService.js';
+import { eventsService } from '../services/EventsService.js';
 
 
 const filterBy = ref('all')
