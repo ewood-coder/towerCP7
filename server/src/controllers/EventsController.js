@@ -1,10 +1,8 @@
 import { Auth0Provider } from "@bcwdev/auth0provider";
 import BaseController from "../utils/BaseController.js";
 import { eventsService } from "../services/EventsService.js";
-// import { picturesService } from "../services/PicturesService.js";
-// import { collaboratorsService } from "../services/CollaboratorsService.js";
-
-// TODO: MAKE SURE TO FINISH MAKING THESE
+import { commentsService } from "../services/CommentsService.js";
+import { ticketsService } from "../services/TicketsService.js";
 
 
 export class EventsController extends BaseController {
@@ -13,10 +11,12 @@ export class EventsController extends BaseController {
 		this.router
 			.get('', this.getEvents)
 			.get('/:eventId', this.getOneById)
-			// .get('/:eventId/comments', this.getEventComments)
-			// .get('/:eventId/tickets', this.getEventAttendeesByTicket)
+			.get('/:eventId/comments', this.getEventComments)
+			.get('/:eventId/tickets', this.getOtherPeoplesEventTickets)
+
 			.use(Auth0Provider.getAuthorizedUserInfo)
 			.post('', this.createEvent)
+			.put('/:eventId', this.editEventById)
 			.delete('/:eventId', this.cancelEvent)
 	}
 	async createEvent(request, response, next) {
@@ -54,30 +54,43 @@ export class EventsController extends BaseController {
 		try {
 			const eventId = request.params.eventId
 			const userId = request.userInfo.id
-			const message = await eventsService.cancelEvent(eventId, userId)
-			response.send(message)
+			const event = await eventsService.cancelEvent(eventId, userId)
+			response.send(event)
 		} catch (error) {
 			next(error)
 		}
 	}
 
-	//   async getEventComments(request, response, next) {
-	//     try {
-	//       const eventId = request.params.eventId
-	//       const comments = await commentsService.getEventComments(eventId)
-	//       response.send(comments)
-	//     } catch (error) {
-	//       next(error)
-	//     }
-	//   }
+	async editEventById(request, response, next) {
+		try {
+			const eventId = request.params.eventId
+			const userId = request.userInfo.id
+			const eventData = request.body
+			const event = await eventsService.editEventById(eventId, eventData, userId)
+			response.send(event)
 
-	//   async getEventAttendeesByTicket(request, response, next) {
-	//     try {
-	//       const eventId = request.params.eventId
-	//       const attendees = await ticketsService.getEventAttendeesByTicket(eventId)
-	//       response.send(attendees)
-	//     } catch (error) {
-	//       next(error)
-	//     }
-	//   }
+		} catch (error) {
+			next(error)
+		}
+	}
+
+	async getEventComments(request, response, next) {
+		try {
+			const eventId = request.params.eventId
+			const comments = await commentsService.getEventComments(eventId)
+			response.send(comments)
+		} catch (error) {
+			next(error)
+		}
+	}
+
+	async getOtherPeoplesEventTickets(request, response, next) {
+		try {
+			const eventId = request.params.eventId
+			const eventTickets = await ticketsService.getOtherPeoplesEventTickets(eventId)
+			response.send(eventTickets)
+		} catch (error) {
+			next(error)
+		}
+	}
 }

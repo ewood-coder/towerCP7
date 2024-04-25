@@ -115,14 +115,12 @@ onMounted(() => {
 
 
 
-		<section class="p-2">
-			<h2 class="mb-3"><u>Upcoming Events</u></h2>
-			<div class="d-flex gap-3 card-group">
-				<div v-for="event in events" :key="event.id" class="mb-2">
+		<h2 class="mb-3"><u>Upcoming Events</u></h2>
+		<section class="p-1 p-md-2 justify-content-center gap-3 card-group">
+			<div v-for="event in events" :key="event.id" class="mb-4">
 
-					<EventCard :event="event" class="d-flex" />
+				<EventCard :event="event" />
 
-				</div>
 			</div>
 		</section>
 
