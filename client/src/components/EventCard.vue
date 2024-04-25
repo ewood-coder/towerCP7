@@ -4,21 +4,18 @@ import { TowerEvent } from '../models/TowerEvent.js';
 
 const props = defineProps({ event: { type: TowerEvent, required: true } })
 
-
-const bgStyle = computed(() => `url(${props.event.coverImg})`)
-
 const borderColor = computed(() => {
 	switch (props.event.type) {
-		case 'Concerts':
-			return '#3DA69F'
-		case 'Conventions':
-			return '#54C58F'
-		case 'Sports':
-			return '#6951CA'
-		case 'Digital':
-			return '#EAB222'
+		case 'concert':
+			return '#006afe' // blue
+		case 'convention':
+			return '#00c767' // green
+		case 'sport':
+			return '#b100e2' // purple
+		case 'digital':
+			return '#EAB222' // orange
 		default:
-			return '#CFD8DC'
+			return '#a6a6a6' // gray
 	}
 })
 
@@ -27,41 +24,32 @@ const borderColor = computed(() => {
 
 <template>
 
+	<!-- TODO: MAKE SURE TO UNCOMMENT ROUTER LINK WHEN EVENT DETAILS PAGE WORKS -->
 	<!-- <RouterLink :to="{ name: 'Event Details', params: { eventId: event.id } }"> -->
-	<div class="card border p-2 d-flex">
-		<div class="h-100 d-flex align-items-end">
-			<img :src="event.coverImg" class="card-img-top"
-				alt="https://images.unsplash.com/photo-1556888335-95371827d5fb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGxhY2Vob2xkZXJ8ZW58MHx8MHx8fDA%3D">
-			<div class="card-body p-2 bg-glass rounded text-light">
-				<div class="color-border">
-					<h4 class="mb-1">{{ event.name }}</h4>
-					<div class="d-flex justify-content-between">
-						<div v-if="event.creator">
-							<img :src="event.creator.picture" class="profile-img"
-								alt="`A beautiful picture of ${event.creator.name}`">
-							<span class="text-secondary ms-1">{{ event.creator.name }}</span>
-						</div>
-					</div>
-				</div>
-			</div>
+
+	<div class="card" style="width: 18rem;">
+		<img :src="event.coverImg" class="card-img-top img-fluid"
+			alt="https://images.unsplash.com/photo-1556888335-95371827d5fb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGxhY2Vob2xkZXJ8ZW58MHx8MHx8fDA%3D">
+		<div class="p-2 color-border">
+			<h4 class="card-title">{{ event.name }}</h4>
+			<p class="card-text">Hosted By: {{ event.creator.name }}</p>
+			<p>{{ event.startDate.toLocaleDateString() }} - {{ event.location }}</p>
+			<hr class="my-0" />
+			<p class="mb-0 my-1">Capacity: {{ event.capacity }}</p>
 		</div>
 	</div>
-	<!-- </RouterLink> -->
 
+	<!-- </RouterLink> -->
 
 </template>
 
 
 <style lang="scss" scoped>
-.card {
-	height: 25vh;
-	background-image: v-bind(bgStyle);
-	background-position: center;
-	background-size: cover;
+.card-text {
+	color: var(--bgGreen);
 }
 
 .color-border {
-	border-left: 4.5px solid v-bind(borderColor);
-	padding-left: 6px;
+	border: 3px solid v-bind(borderColor);
 }
 </style>

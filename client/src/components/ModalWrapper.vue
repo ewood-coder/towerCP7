@@ -14,10 +14,9 @@ defineProps({ modalId: String })
 		<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					{{ modalId }}
+					Event Form
 				</div>
 				<div class="modal-body">
-					<!-- <AlbumForm/> -->
 					<slot>
 						Replaceable content here
 					</slot>

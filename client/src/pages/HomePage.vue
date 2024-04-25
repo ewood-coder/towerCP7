@@ -8,6 +8,8 @@ import EventForm from '../components/EventForm.vue';
 import { eventsService } from '../services/EventsService.js';
 
 
+const account = computed(() => AppState.account)
+
 const filterBy = ref('all')
 
 const events = computed(() => {
@@ -17,27 +19,27 @@ const events = computed(() => {
 
 const filters = [
 	{
-		name: 'All',
+		name: 'all',
 		backgroundImage: 'https://images.unsplash.com/photo-1597242051386-c0a24ceae025?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cHVycGxlJTIwY2xvdWRzfGVufDB8fDB8fHww'
 	},
 	{
-		name: 'Concerts',
+		name: 'concert',
 		backgroundImage: 'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y29uY2VydHxlbnwwfHwwfHx8MA%3D%3D',
 	},
 	{
-		name: 'Conventions',
+		name: 'convention',
 		backgroundImage: 'https://images.unsplash.com/photo-1690645724861-08033a9b435b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YW5pbWUlMjBjb252ZW50aW9uc3xlbnwwfHwwfHx8MA%3D%3D',
 	},
 	{
-		name: 'Sports',
+		name: 'sport',
 		backgroundImage: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHNwb3J0c3xlbnwwfHwwfHx8MA%3D%3D'
 	},
 	{
-		name: 'Digital',
+		name: 'digital',
 		backgroundImage: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZGlnaXRhbHxlbnwwfHwwfHx8MA%3D%3D'
 	},
 	{
-		name: 'Misc',
+		name: 'misc',
 		backgroundImage: 'https://images.unsplash.com/photo-1541356665065-22676f35dd40?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fGFic3RyYWN0fGVufDB8fDB8fHww'
 	}
 ]
@@ -51,7 +53,7 @@ async function getEvents() {
 	}
 }
 
-onMounted(() => { // when this component is loaded in, get the albums
+onMounted(() => {
 	getEvents()
 })
 
@@ -84,11 +86,17 @@ onMounted(() => { // when this component is loaded in, get the albums
 		<section class="row">
 			<div class="col-12 mt-3 d-flex gap-4 mb-3">
 				<h2>Create Event: </h2>
-				<button v-if="account == null" class="fs-3 text-light sendBtn rounded px-2" title="Create a new event!"
+				<button v-if="account != null" class="fs-3 text-light sendBtn rounded px-2" title="Create a new event!"
 					data-bs-toggle="modal" data-bs-target="#eventFormModal">
 
 					<i class="mdi mdi-plus"></i>
 				</button>
+
+				<div v-else :disabled="account = null" class="fs-3 text-light sendBtnDisabled rounded px-2"
+					title="Must Login To Create Event">
+
+					<i class="mdi mdi-login"> Login First</i>
+				</div>
 			</div>
 
 			<hr class="mb-3 mb-md-5" />
@@ -108,11 +116,13 @@ onMounted(() => { // when this component is loaded in, get the albums
 
 
 		<section class="p-2">
-			<h2><u>Upcoming Events</u></h2>
-			<div v-for="event in events" :key="event.id" class="d-flex flex-wrap gap-3 p-4 justify-content-center">
+			<h2 class="mb-3"><u>Upcoming Events</u></h2>
+			<div class="d-flex gap-3 card-group">
+				<div v-for="event in events" :key="event.id" class="mb-2">
 
-				<EventCard :event="event" />
+					<EventCard :event="event" class="d-flex" />
 
+				</div>
 			</div>
 		</section>
 
@@ -120,10 +130,6 @@ onMounted(() => { // when this component is loaded in, get the albums
 
 	<!-- NOTE the modal has to be here, it's just hidden from view -->
 	<ModalWrapper modalId="eventFormModal">
-		<!-- <form action="">
-  <label for="">Get Creating!</label>
-  <input type="text">
-</form> -->
 		<EventForm />
 	</ModalWrapper>
 </template>
@@ -154,6 +160,16 @@ onMounted(() => { // when this component is loaded in, get the albums
 	background-color: var(--bgGreen);
 }
 
+.sendBtnDisabled {
+	background-color: var(--bgPink);
+	border: none;
+	transition: 0.4s;
+}
+
+.sendBtnDisabled:hover {
+	background-color: var(--bgRed);
+}
+
 .bgImg {
 	// background-size: cover;
 	background-image: url('https://www.rocketlawyer.com/binaries/content/gallery/guide-hero-images/US/social-events-outside-of-work-1070271762.jpg');
@@ -175,23 +191,22 @@ onMounted(() => { // when this component is loaded in, get the albums
 	}
 }
 
-.home {
-	display: grid;
-	height: 80vh;
-	place-content: center;
-	text-align: center;
-	user-select: none;
+// .home {
+// 	display: grid;
+// 	height: 80vh;
+// 	place-content: center;
+// 	text-align: center;
+// 	user-select: none;
 
-	.home-card {
-		width: clamp(500px, 50vw, 100%);
+// 	.home-card {
+// 		width: clamp(500px, 50vw, 100%);
 
-		>img {
-			height: 200px;
-			max-width: 200px;
-			width: 100%;
-			object-fit: contain;
-			object-position: center;
-		}
-	}
-}
-</style>
+// 		>img {
+// 			height: 200px;
+// 			max-width: 200px;
+// 			width: 100%;
+// 			object-fit: contain;
+// 			object-position: center;
+// 		}
+// 	}
+// }</style>
