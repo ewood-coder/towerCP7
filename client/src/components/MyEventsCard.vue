@@ -1,12 +1,3 @@
-<template>
-	<div class="myEvents">
-		<h2>Is this showing up?</h2>
-
-
-	</div>
-</template>
-
-
 <script>
 
 import { AppState } from '../AppState';
@@ -23,6 +14,14 @@ export default {
 	}
 };
 </script>
+
+<template>
+	<div class="myEvents">
+		<h2>Is this showing up?</h2>
+
+
+	</div>
+</template>
 
 
 <style lang="scss" scoped></style>
