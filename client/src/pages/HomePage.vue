@@ -86,13 +86,13 @@ onMounted(() => {
 		<section class="row">
 			<div class="col-12 mt-3 d-flex gap-4 mb-3">
 				<h2>Create Event: </h2>
-				<button v-if="account != null" class="fs-3 text-light sendBtn rounded px-2" title="Create a new event!"
+				<button v-if="account !== null" class="fs-3 text-light sendBtn rounded px-2" title="Create a new event!"
 					data-bs-toggle="modal" data-bs-target="#eventFormModal">
 
 					<i class="mdi mdi-plus"></i>
 				</button>
 
-				<div v-else :disabled="account = null" class="fs-3 text-light sendBtnDisabled rounded px-2"
+				<div v-else :disabled="account == null" class="fs-3 text-light sendBtnDisabled rounded px-2"
 					title="Must Login To Create Event">
 
 					<i class="mdi mdi-login"> Login First</i>

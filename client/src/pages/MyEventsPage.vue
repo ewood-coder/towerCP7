@@ -21,6 +21,7 @@ export default {
 		onMounted(() => {
 			getMyTickets()
 		})
+
 		async function getMyTickets() {
 			try {
 				await ticketsService.getMyTickets()
@@ -68,9 +69,8 @@ export default {
 			<section class="row">
 				<h3 class="text-center mt-4">Upcoming Events</h3>
 
-				<div class="col-12 col-md-4 mt-3 d-flex" v-for="myTicket in myTickets">
-					<MyTicket :key="myTicket.id" :myTicket="myTicket" />
-
+				<div class="col-12 col-md-4 mt-3 d-flex" v-for="myTicket in myTickets" :key="myTicket.id">
+					<MyTicket :myTicket="myTicket" />
 				</div>
 
 			</section>

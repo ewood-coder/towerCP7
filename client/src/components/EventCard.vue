@@ -29,42 +29,40 @@ const borderColor = computed(() => {
 
 <template>
 
-	<!-- TODO: MAKE SURE TO UNCOMMENT ROUTER LINK WHEN EVENT DETAILS PAGE WORKS -->
-	<!-- <RouterLink :to="{ name: 'Event Details', params: { eventId: event.id } }"> -->
 
-	<div class="card" style="width: 18rem;">
-		<img :src="event.coverImg" class="card-img-top"
-			alt="https://images.unsplash.com/photo-1556888335-95371827d5fb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGxhY2Vob2xkZXJ8ZW58MHx8MHx8fDA%3D">
-		<div class="p-2 color-border">
-			<h4 class="card-title">{{ event.name }}</h4>
-			<p class="card-text">Hosted By: {{ event.creator.name }}</p>
-			<p>{{ event.startDate.toLocaleDateString() }} - {{ event.location }}</p>
-			<p class="mb-0 my-1 d-flex">Capacity: {{ event.capacity }}</p>
-
-			<div v-if="event.creatorId == account?.id">
-				<hr class="mb-2" />
-			</div>
-
-			<div class="d-flex justify-content-center">
+	<RouterLink :to="{ name: 'Event Details', params: { eventId: event.id } }">
+		<div class="card" style="width: 18rem;">
+			<img :src="event.coverImg" class="card-img-top"
+				alt="https://images.unsplash.com/photo-1556888335-95371827d5fb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGxhY2Vob2xkZXJ8ZW58MHx8MHx8fDA%3D">
+			<div class="p-2 color-border">
+				<h4 class="card-title">{{ event.name }}</h4>
+				<p class="card-text">Hosted By: {{ event.creator.name }}</p>
+				<p>{{ event.startDate.toLocaleDateString() }} - {{ event.location }}</p>
+				<p class="mb-0 my-1 d-flex">Capacity: {{ event.capacity }}</p>
 
 				<div v-if="event.creatorId == account?.id">
-					<button @click="cancelEvent()" class="clearBtn text-light p-2 mt-0"><i class="mdi mdi-cancel">
-							Cancel Event</i>
-					</button>
+					<hr class="mb-2" />
 				</div>
 
-				<div v-else>
-					<button hidden class="disabledBtn text-light" title="Can't cancel other people's events"><i
-							class="mdi mdi-cancel">
-							Cancel Event</i>
-					</button>
-				</div>
+				<div class="d-flex justify-content-center">
 
+					<div v-if="event.creatorId == account?.id">
+						<button @click="cancelEvent()" class="clearBtn text-light p-2 mt-0"><i class="mdi mdi-cancel">
+								Cancel Event</i>
+						</button>
+					</div>
+
+					<div v-else>
+						<button hidden class="disabledBtn text-light" title="Can't cancel other people's events"><i
+								class="mdi mdi-cancel">
+								Cancel Event</i>
+						</button>
+					</div>
+
+				</div>
 			</div>
 		</div>
-	</div>
-
-	<!-- </RouterLink> -->
+	</RouterLink>
 
 </template>
 
